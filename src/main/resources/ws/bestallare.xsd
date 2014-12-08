@@ -4,7 +4,7 @@
     <xs:element name="fmuVardgivarenhetTilldelningRequest" >
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="arendeId" type="tns:arendeId"/>
+                <xs:element name="arendeId" type="tns:arendeIdType"/>
                 <xs:element name="vardgivarenhet" type="tns:vardgivarenhetType"/>
                 <xs:element name="accepterad" type="xs:boolean"/>
             </xs:sequence>
@@ -18,15 +18,33 @@
         </xs:complexType>
     </xs:element>
 
+    <!--Type that contain FMU start date time -->
+    <xs:element name="fmuStartRequest" >
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="arendeId" type="tns:arendeIdType"/>
+                <xs:element name="startDateTime" type="xs:dateTime"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="fmuStartResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="serviceResponse" type="tns:serviceResponseType"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+
     <!--Type that contain information about requested additional documents -->
     <xs:element name="begarKompletteringFmuHandlingRequest">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="arendeId" type="tns:arendeId"/>
+                <xs:element name="arendeId" type="tns:arendeIdType"/>
                 <xs:element name="handlingBegardDateTime" type="xs:dateTime"/>
-                <xs:element name="handlingBegardAv" type="tns:person"/>
+                <xs:element name="handlingBegardAv" type="tns:personType"/>
                 <xs:element name="handling" type="xs:string"/>
-                <xs:element name="notering" type="tns:notering" minOccurs="0"/>
+                <xs:element name="notering" type="tns:noteringType" minOccurs="0"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -42,8 +60,8 @@
     <xs:element name="fmuBokningRequest">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="arendeId" type="tns:arendeId"/>
-                <xs:element name="bokningsId" type="tns:bokningsId"/>
+                <xs:element name="arendeId" type="tns:arendeIdType"/>
+                <xs:element name="bokningsId" type="tns:uuIdType"/>
                 <xs:element name="bokningsType" type="tns:bookingType"/>
                 <xs:element name="startDateTime" type="xs:dateTime"/>
                 <xs:element name="slutDateTime" type="xs:dateTime"/>
@@ -65,11 +83,11 @@
     <xs:element name="fmuBokningsavvikelseRequest">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="arendeId" type="tns:arendeId"/>
-                <xs:element name="bokningsId" type="tns:bokningsId"/>
+                <xs:element name="arendeId" type="tns:arendeIdType"/>
+                <xs:element name="bokningsId" type="tns:uuIdType"/>
                 <xs:element name="bokningsavvikelse" type="tns:bookingDeviationType"/>
                 <xs:element name="svarBokningsavvikelseErfordras" type="xs:boolean" />
-                <xs:element name="notering" type="tns:notering" minOccurs="0"/>
+                <xs:element name="notering" type="tns:noteringType" minOccurs="0"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -85,7 +103,7 @@
     <xs:element name="fmuIntygSentRequest">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="arendeId" type="tns:arendeId"/>
+                <xs:element name="arendeId" type="tns:arendeIdType"/>
                 <xs:element name="intygSentDateTime" type="xs:dateTime"/>
             </xs:sequence>
         </xs:complexType>
@@ -100,13 +118,13 @@
 
     <xs:complexType name="serviceResponseType">
         <xs:sequence>
-            <xs:element name="arendeId" type="tns:arendeId"/>
-            <xs:element name="statusCode" type="tns:statusCode"/>
+            <xs:element name="arendeId" type="tns:arendeIdType"/>
+            <xs:element name="statusCode" type="tns:statusCodeType"/>
             <xs:element name="errorMessage" type="tns:errorMessage" minOccurs="0"/>
         </xs:sequence>
     </xs:complexType>
 
-    <xs:complexType name="person">
+    <xs:complexType name="personType">
         <xs:sequence>
             <xs:element name="namn" type="xs:string"/>
             <xs:element name="personalid" type="xs:string" minOccurs="0"/>
@@ -118,24 +136,12 @@
         </xs:sequence>
     </xs:complexType>
 
-    <xs:complexType name="hoSPerson">
-        <xs:sequence>
-            <xs:element name="namn" type="xs:string"/>
-            <xs:element name="hsaId" type="xs:string" minOccurs="0"/>
-            <xs:element name="befattning" type="xs:string"/>
-            <xs:element name="enhet" type="xs:string"/>
-            <xs:element name="organisation" type="xs:string"/>
-            <xs:element name="telefon" type="xs:string" minOccurs="0"/>
-            <xs:element name="epostAdress" type="tns:epostAdressType" minOccurs="0" />
-        </xs:sequence>
-    </xs:complexType>
-
-    <xs:complexType name="notering">
-        <xs:sequence>
-            <xs:element name="notering" type="xs:string"/>
-            <xs:element name="noteradAv" type="tns:person"/>
-        </xs:sequence>
-    </xs:complexType>
+    <xs:complexType name="noteringType">
+		<xs:sequence>
+			<xs:element name="notering" type="xs:string"/>
+			<xs:element name="noteradAv" type="tns:personType"/>
+		</xs:sequence>
+	</xs:complexType>
 
     <xs:complexType name="vardgivarenhetType">
         <xs:sequence>
@@ -167,14 +173,14 @@
     <xs:simpleType name="bookingDeviationType">
         <xs:restriction base="xs:string">
             <xs:enumeration value="INVANARE_ABSENT"/>
-            <xs:enumeration value="INVANARE_CANCELLED_LT_48"/>
-            <xs:enumeration value="INVANARE_CANCELLED_GT_48"/>
-            <xs:enumeration value="INVANARE_CANCELLED_LT_96"/>
-            <xs:enumeration value="INVANARE_CANCELLED_GT_96"/>
-            <xs:enumeration value="INTERPRETER_CANCELED"/>
+            <xs:enumeration value="CANCELLED_BY_INVANARE_LT_48"/>
+            <xs:enumeration value="CANCELLED_BY_INVANARE_GT_48"/>
+            <xs:enumeration value="CANCELLED_BY_INVANARE_LT_96"/>
+            <xs:enumeration value="CANCELLED_BY_INVANARE_GT_96"/>
+            <xs:enumeration value="CANCELLED_BY_CAREGIVER"/>
+            <xs:enumeration value="CANCELLED_BY_INTERPRETER"/>
             <xs:enumeration value="INTERPRETER_ABSENT"/>
             <xs:enumeration value="INTERPRETER_NOT_UTILIZED"/>
-            <xs:enumeration value="PERSON_ABSENT"/>
         </xs:restriction>
     </xs:simpleType>
 
@@ -183,19 +189,17 @@
             <xs:pattern value="[^@]+@[^\.]+\..+"/>
         </xs:restriction>
     </xs:simpleType>
-    <xs:simpleType name="arendeId">
-        <xs:restriction base="xs:string">
-            <xs:minLength value="12"/>
-            <xs:maxLength value="12"/>
-        </xs:restriction>
-    </xs:simpleType>
-    <xs:simpleType name="bokningsId">
-        <xs:restriction base="xs:string">
-            <xs:minLength value="36"/>
-            <xs:maxLength value="36"/>
-        </xs:restriction>
-    </xs:simpleType>
-    <xs:simpleType name="statusCode">
+	<xs:simpleType name="arendeIdType">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[0-9]{12}"/>
+		</xs:restriction>
+	</xs:simpleType>
+   	<xs:simpleType name="uuIdType">
+		<xs:restriction base="xs:string">
+			<xs:length value="36"/>
+		</xs:restriction>
+	</xs:simpleType>
+    <xs:simpleType name="statusCodeType">
         <xs:restriction base="xs:string">
             <xs:enumeration value="OK"/>
             <xs:enumeration value="INVALID_REQUEST"/>

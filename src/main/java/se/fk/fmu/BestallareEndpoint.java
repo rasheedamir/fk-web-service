@@ -22,11 +22,6 @@ public class BestallareEndpoint {
 
     /**
      * Handle's fmuVardgivarenhetTilldelningRequest
-     * @param request
-     *     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "skapaFmuEavropRequest")
-    @ResponsePayload
-    public SkapaFmuEavropResponse createEavrop(@RequestPayload SkapaFmuEavropRequest request) {
-
      * 
      * @return
      */
@@ -38,13 +33,34 @@ public class BestallareEndpoint {
         
         ServiceResponseType serviceResponseType = new ServiceResponseType();
         serviceResponseType.setArendeId(request.getArendeId());
-        serviceResponseType.setStatusCode(StatusCode.OK);
+        serviceResponseType.setStatusCode(StatusCodeType.OK);
         FmuVardgivarenhetTilldelningResponse fmuVardgivarenhetTilldelningResponse = new FmuVardgivarenhetTilldelningResponse();
         fmuVardgivarenhetTilldelningResponse.setServiceResponse(serviceResponseType);
 
         return fmuVardgivarenhetTilldelningResponse;
     }
 
+    /**
+     * Handle's fmuVardgivarenhetTilldelningRequest
+     * 
+     * @return
+     */
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "fmuStartRequest")
+    @ResponsePayload
+    public FmuStartResponse handleFmuStartRequest(@RequestPayload FmuStartRequest request) {
+
+        log.info(ReflectionToStringBuilder.toString(request));
+        
+        ServiceResponseType serviceResponseType = new ServiceResponseType();
+        serviceResponseType.setArendeId(request.getArendeId());
+        serviceResponseType.setStatusCode(StatusCodeType.OK);
+        FmuStartResponse fmuStartResponse = new FmuStartResponse();
+        fmuStartResponse.setServiceResponse(serviceResponseType);
+
+        return fmuStartResponse;
+    }
+
+    
     /**
      * Handle's begarKompletteringFmuHandlingRequest
      * @param request
@@ -57,7 +73,7 @@ public class BestallareEndpoint {
         log.info(ReflectionToStringBuilder.toString(request));
         ServiceResponseType serviceResponseType = new ServiceResponseType();
         serviceResponseType.setArendeId(request.getArendeId());
-        serviceResponseType.setStatusCode(StatusCode.OK);
+        serviceResponseType.setStatusCode(StatusCodeType.OK);
         BegarKompletteringFmuHandlingResponse begarKompletteringFmuHandlingResponse = new BegarKompletteringFmuHandlingResponse();
         begarKompletteringFmuHandlingResponse.setServiceResponse(serviceResponseType);
 
@@ -76,7 +92,7 @@ public class BestallareEndpoint {
         log.info(ReflectionToStringBuilder.toString(request));
         ServiceResponseType serviceResponseType = new ServiceResponseType();
         serviceResponseType.setArendeId(request.getArendeId());
-        serviceResponseType.setStatusCode(StatusCode.OK);
+        serviceResponseType.setStatusCode(StatusCodeType.OK);
         FmuBokningResponse fmuBokningResponse = new FmuBokningResponse();
         fmuBokningResponse.setServiceResponse(serviceResponseType);
 
@@ -95,7 +111,7 @@ public class BestallareEndpoint {
         log.info(ReflectionToStringBuilder.toString(request));
         ServiceResponseType serviceResponseType = new ServiceResponseType();
         serviceResponseType.setArendeId(request.getArendeId());
-        serviceResponseType.setStatusCode(StatusCode.OK);
+        serviceResponseType.setStatusCode(StatusCodeType.OK);
         FmuBokningsavvikelseResponse fmuBokningsavvikelseResponse = new FmuBokningsavvikelseResponse();
         fmuBokningsavvikelseResponse.setServiceResponse(serviceResponseType);
 
@@ -114,7 +130,7 @@ public class BestallareEndpoint {
         log.info(ReflectionToStringBuilder.toString(request));
         ServiceResponseType serviceResponseType = new ServiceResponseType();
         serviceResponseType.setArendeId(request.getArendeId());
-        serviceResponseType.setStatusCode(StatusCode.OK);
+        serviceResponseType.setStatusCode(StatusCodeType.OK);
         FmuIntygSentResponse fmuIntygSentResponse = new FmuIntygSentResponse();
         fmuIntygSentResponse.setServiceResponse(serviceResponseType);
 
