@@ -1,10 +1,13 @@
 package se.fk.fmu;
 
 import lombok.extern.slf4j.Slf4j;
+
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
+import org.springframework.ws.server.endpoint.annotation.RequestPayload;
 import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
+
 import ws.fk.fmu.admin.eavrop.*;
 
 /**
@@ -20,13 +23,19 @@ public class BestallareEndpoint {
     /**
      * Handle's fmuVardgivarenhetTilldelningRequest
      * @param request
+     *     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "skapaFmuEavropRequest")
+    @ResponsePayload
+    public SkapaFmuEavropResponse createEavrop(@RequestPayload SkapaFmuEavropRequest request) {
+
+     * 
      * @return
      */
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "fmuVardgivarenhetTilldelningRequest")
     @ResponsePayload
-    public FmuVardgivarenhetTilldelningResponse handleFmuVardgivarenhetTilldelningRequest(FmuVardgivarenhetTilldelningRequest request) {
+    public FmuVardgivarenhetTilldelningResponse handleFmuVardgivarenhetTilldelningRequest(@RequestPayload FmuVardgivarenhetTilldelningRequest request) {
 
         log.info(ReflectionToStringBuilder.toString(request));
+        
         ServiceResponseType serviceResponseType = new ServiceResponseType();
         serviceResponseType.setArendeId(request.getArendeId());
         serviceResponseType.setStatusCode(StatusCode.OK);
@@ -43,7 +52,7 @@ public class BestallareEndpoint {
      */
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "begarKompletteringFmuHandlingRequest")
     @ResponsePayload
-    public BegarKompletteringFmuHandlingResponse handleBegarKompletteringFmuHandlingRequest(BegarKompletteringFmuHandlingRequest request) {
+    public BegarKompletteringFmuHandlingResponse handleBegarKompletteringFmuHandlingRequest(@RequestPayload BegarKompletteringFmuHandlingRequest request) {
 
         log.info(ReflectionToStringBuilder.toString(request));
         ServiceResponseType serviceResponseType = new ServiceResponseType();
@@ -62,7 +71,7 @@ public class BestallareEndpoint {
      */
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "fmuBokningRequest")
     @ResponsePayload
-    public FmuBokningResponse handleFmuBokningRequest(FmuBokningRequest request) {
+    public FmuBokningResponse handleFmuBokningRequest(@RequestPayload FmuBokningRequest request) {
 
         log.info(ReflectionToStringBuilder.toString(request));
         ServiceResponseType serviceResponseType = new ServiceResponseType();
@@ -79,7 +88,9 @@ public class BestallareEndpoint {
      * @param request
      * @return
      */
-    public FmuBokningsavvikelseResponse handleFmuBokningsavvikelseRequest(FmuBokningsavvikelseRequest request) {
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "fmuBokningsavvikelseRequest")
+    @ResponsePayload
+    public FmuBokningsavvikelseResponse handleFmuBokningsavvikelseRequest(@RequestPayload FmuBokningsavvikelseRequest request) {
 
         log.info(ReflectionToStringBuilder.toString(request));
         ServiceResponseType serviceResponseType = new ServiceResponseType();
@@ -96,7 +107,9 @@ public class BestallareEndpoint {
      * @param request
      * @return
      */
-    public FmuIntygSentResponse handleFmuIntygSentRequest(FmuIntygSentRequest request) {
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "fmuIntygSentRequest")
+    @ResponsePayload
+    public FmuIntygSentResponse handleFmuIntygSentRequest(@RequestPayload FmuIntygSentRequest request) {
 
         log.info(ReflectionToStringBuilder.toString(request));
         ServiceResponseType serviceResponseType = new ServiceResponseType();
@@ -107,4 +120,5 @@ public class BestallareEndpoint {
 
         return null;
     }
+    
 }
