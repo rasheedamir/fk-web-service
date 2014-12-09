@@ -1,5 +1,11 @@
 package se.fk.fmu;
 
+import java.io.ByteArrayOutputStream;
+
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
+
 import lombok.extern.slf4j.Slf4j;
 
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
@@ -18,123 +24,166 @@ import ws.fk.fmu.admin.eavrop.*;
 @Slf4j
 public class BestallareEndpoint {
 
-    private static final String NAMESPACE_URI = "http://fk.ws/fmu/admin/eavrop";
+	private static final String NAMESPACE_URI = "http://fk.ws/fmu/admin/eavrop";
 
-    /**
-     * Handle's fmuVardgivarenhetTilldelningRequest
-     * 
-     * @return
-     */
-    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "fmuVardgivarenhetTilldelningRequest")
-    @ResponsePayload
-    public FmuVardgivarenhetTilldelningResponse handleFmuVardgivarenhetTilldelningRequest(@RequestPayload FmuVardgivarenhetTilldelningRequest request) {
+	/**
+	 * Handle's fmuVardgivarenhetTilldelningRequest
+	 * 
+	 * @return
+	 */
+	@PayloadRoot(namespace = NAMESPACE_URI, localPart = "fmuVardgivarenhetTilldelningRequest")
+	@ResponsePayload
+	public FmuVardgivarenhetTilldelningResponse handleFmuVardgivarenhetTilldelningRequest(
+			@RequestPayload FmuVardgivarenhetTilldelningRequest request) {
 
-        log.info(ReflectionToStringBuilder.toString(request));
-        
-        ServiceResponseType serviceResponseType = new ServiceResponseType();
-        serviceResponseType.setArendeId(request.getArendeId());
-        serviceResponseType.setStatusCode(StatusCodeType.OK);
-        FmuVardgivarenhetTilldelningResponse fmuVardgivarenhetTilldelningResponse = new FmuVardgivarenhetTilldelningResponse();
-        fmuVardgivarenhetTilldelningResponse.setServiceResponse(serviceResponseType);
+		log.info(ReflectionToStringBuilder.toString(request));
+		prettyPrint(request);
+		
+		ServiceResponseType serviceResponseType = new ServiceResponseType();
+		serviceResponseType.setArendeId(request.getArendeId());
+		serviceResponseType.setStatusCode(StatusCodeType.OK);
+		FmuVardgivarenhetTilldelningResponse fmuVardgivarenhetTilldelningResponse = new FmuVardgivarenhetTilldelningResponse();
+		fmuVardgivarenhetTilldelningResponse
+				.setServiceResponse(serviceResponseType);
 
-        return fmuVardgivarenhetTilldelningResponse;
-    }
+		return fmuVardgivarenhetTilldelningResponse;
+	}
 
-    /**
-     * Handle's fmuVardgivarenhetTilldelningRequest
-     * 
-     * @return
-     */
-    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "fmuStartRequest")
-    @ResponsePayload
-    public FmuStartResponse handleFmuStartRequest(@RequestPayload FmuStartRequest request) {
+	/**
+	 * Handle's fmuVardgivarenhetTilldelningRequest
+	 * 
+	 * @return
+	 */
+	@PayloadRoot(namespace = NAMESPACE_URI, localPart = "fmuStartRequest")
+	@ResponsePayload
+	public FmuStartResponse handleFmuStartRequest(
+			@RequestPayload FmuStartRequest request) {
 
-        log.info(ReflectionToStringBuilder.toString(request));
-        
-        ServiceResponseType serviceResponseType = new ServiceResponseType();
-        serviceResponseType.setArendeId(request.getArendeId());
-        serviceResponseType.setStatusCode(StatusCodeType.OK);
-        FmuStartResponse fmuStartResponse = new FmuStartResponse();
-        fmuStartResponse.setServiceResponse(serviceResponseType);
+		log.info(ReflectionToStringBuilder.toString(request));
+		prettyPrint(request);
+		
+		ServiceResponseType serviceResponseType = new ServiceResponseType();
+		serviceResponseType.setArendeId(request.getArendeId());
+		serviceResponseType.setStatusCode(StatusCodeType.OK);
+		FmuStartResponse fmuStartResponse = new FmuStartResponse();
+		fmuStartResponse.setServiceResponse(serviceResponseType);
 
-        return fmuStartResponse;
-    }
+		return fmuStartResponse;
+	}
 
-    
-    /**
-     * Handle's begarKompletteringFmuHandlingRequest
-     * @param request
-     * @return
-     */
-    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "begarKompletteringFmuHandlingRequest")
-    @ResponsePayload
-    public BegarKompletteringFmuHandlingResponse handleBegarKompletteringFmuHandlingRequest(@RequestPayload BegarKompletteringFmuHandlingRequest request) {
+	/**
+	 * Handle's begarKompletteringFmuHandlingRequest
+	 * 
+	 * @param request
+	 * @return
+	 */
+	@PayloadRoot(namespace = NAMESPACE_URI, localPart = "begarKompletteringFmuHandlingRequest")
+	@ResponsePayload
+	public BegarKompletteringFmuHandlingResponse handleBegarKompletteringFmuHandlingRequest(
+			@RequestPayload BegarKompletteringFmuHandlingRequest request) {
 
-        log.info(ReflectionToStringBuilder.toString(request));
-        ServiceResponseType serviceResponseType = new ServiceResponseType();
-        serviceResponseType.setArendeId(request.getArendeId());
-        serviceResponseType.setStatusCode(StatusCodeType.OK);
-        BegarKompletteringFmuHandlingResponse begarKompletteringFmuHandlingResponse = new BegarKompletteringFmuHandlingResponse();
-        begarKompletteringFmuHandlingResponse.setServiceResponse(serviceResponseType);
+		log.info(ReflectionToStringBuilder.toString(request));
+		prettyPrint(request);
+		
+		ServiceResponseType serviceResponseType = new ServiceResponseType();
+		serviceResponseType.setArendeId(request.getArendeId());
+		serviceResponseType.setStatusCode(StatusCodeType.OK);
+		BegarKompletteringFmuHandlingResponse begarKompletteringFmuHandlingResponse = new BegarKompletteringFmuHandlingResponse();
+		begarKompletteringFmuHandlingResponse
+				.setServiceResponse(serviceResponseType);
 
-        return begarKompletteringFmuHandlingResponse;
-    }
+		return begarKompletteringFmuHandlingResponse;
+	}
 
-    /**
-     * Handle's fmuBokningRequest
-     * @param request
-     * @return
-     */
-    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "fmuBokningRequest")
-    @ResponsePayload
-    public FmuBokningResponse handleFmuBokningRequest(@RequestPayload FmuBokningRequest request) {
+	/**
+	 * Handle's fmuBokningRequest
+	 * 
+	 * @param request
+	 * @return
+	 */
+	@PayloadRoot(namespace = NAMESPACE_URI, localPart = "fmuBokningRequest")
+	@ResponsePayload
+	public FmuBokningResponse handleFmuBokningRequest(
+			@RequestPayload FmuBokningRequest request) {
 
-        log.info(ReflectionToStringBuilder.toString(request));
-        ServiceResponseType serviceResponseType = new ServiceResponseType();
-        serviceResponseType.setArendeId(request.getArendeId());
-        serviceResponseType.setStatusCode(StatusCodeType.OK);
-        FmuBokningResponse fmuBokningResponse = new FmuBokningResponse();
-        fmuBokningResponse.setServiceResponse(serviceResponseType);
+		log.info(ReflectionToStringBuilder.toString(request));
+		prettyPrint(request);
+		
+		ServiceResponseType serviceResponseType = new ServiceResponseType();
+		serviceResponseType.setArendeId(request.getArendeId());
+		serviceResponseType.setStatusCode(StatusCodeType.OK);
+		FmuBokningResponse fmuBokningResponse = new FmuBokningResponse();
+		fmuBokningResponse.setServiceResponse(serviceResponseType);
 
-        return null;
-    }
+		return null;
+	}
 
-    /**
-     * Handle's fmuBokningsavvikelseRequest
-     * @param request
-     * @return
-     */
-    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "fmuBokningsavvikelseRequest")
-    @ResponsePayload
-    public FmuBokningsavvikelseResponse handleFmuBokningsavvikelseRequest(@RequestPayload FmuBokningsavvikelseRequest request) {
+	/**
+	 * Handle's fmuBokningsavvikelseRequest
+	 * 
+	 * @param request
+	 * @return
+	 */
+	@PayloadRoot(namespace = NAMESPACE_URI, localPart = "fmuBokningsavvikelseRequest")
+	@ResponsePayload
+	public FmuBokningsavvikelseResponse handleFmuBokningsavvikelseRequest(
+			@RequestPayload FmuBokningsavvikelseRequest request) {
 
-        log.info(ReflectionToStringBuilder.toString(request));
-        ServiceResponseType serviceResponseType = new ServiceResponseType();
-        serviceResponseType.setArendeId(request.getArendeId());
-        serviceResponseType.setStatusCode(StatusCodeType.OK);
-        FmuBokningsavvikelseResponse fmuBokningsavvikelseResponse = new FmuBokningsavvikelseResponse();
-        fmuBokningsavvikelseResponse.setServiceResponse(serviceResponseType);
+		log.info(ReflectionToStringBuilder.toString(request));
+		prettyPrint(request);
+		
+		ServiceResponseType serviceResponseType = new ServiceResponseType();
+		serviceResponseType.setArendeId(request.getArendeId());
+		serviceResponseType.setStatusCode(StatusCodeType.OK);
+		FmuBokningsavvikelseResponse fmuBokningsavvikelseResponse = new FmuBokningsavvikelseResponse();
+		fmuBokningsavvikelseResponse.setServiceResponse(serviceResponseType);
 
-        return null;
-    }
+		return null;
+	}
 
-    /**
-     * Handle's fmuIntygSentRequest
-     * @param request
-     * @return
-     */
-    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "fmuIntygSentRequest")
-    @ResponsePayload
-    public FmuIntygSentResponse handleFmuIntygSentRequest(@RequestPayload FmuIntygSentRequest request) {
+	/**
+	 * Handle's fmuIntygSentRequest
+	 * 
+	 * @param request
+	 * @return
+	 */
+	@PayloadRoot(namespace = NAMESPACE_URI, localPart = "fmuIntygSentRequest")
+	@ResponsePayload
+	public FmuIntygSentResponse handleFmuIntygSentRequest(
+			@RequestPayload FmuIntygSentRequest request) {
 
-        log.info(ReflectionToStringBuilder.toString(request));
-        ServiceResponseType serviceResponseType = new ServiceResponseType();
-        serviceResponseType.setArendeId(request.getArendeId());
-        serviceResponseType.setStatusCode(StatusCodeType.OK);
-        FmuIntygSentResponse fmuIntygSentResponse = new FmuIntygSentResponse();
-        fmuIntygSentResponse.setServiceResponse(serviceResponseType);
+		log.info(ReflectionToStringBuilder.toString(request));
+		prettyPrint(request);
+		
+		ServiceResponseType serviceResponseType = new ServiceResponseType();
+		serviceResponseType.setArendeId(request.getArendeId());
+		serviceResponseType.setStatusCode(StatusCodeType.OK);
+		FmuIntygSentResponse fmuIntygSentResponse = new FmuIntygSentResponse();
+		fmuIntygSentResponse.setServiceResponse(serviceResponseType);
 
-        return null;
-    }
-    
+		return null;
+	}
+
+	/*
+	 * 
+	 */
+	private void prettyPrint(Object object) {
+		try {
+
+			JAXBContext jaxbContext = JAXBContext.newInstance(object.getClass());
+			Marshaller marshaller = jaxbContext.createMarshaller();
+
+			// output pretty printed
+			marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+
+			ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+			marshaller.marshal(object, byteArrayOutputStream);
+			//jaxbMarshaller.marshal(o, System.out);
+			log.info("\n"+byteArrayOutputStream.toString());
+
+		} catch (JAXBException e) {
+			e.printStackTrace();
+		}
+	}
+
 }
