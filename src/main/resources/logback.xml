@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration scan="true">
+    <include resource="org/springframework/boot/logging/logback/base.xml" />
+
+    <appender name="JSON" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>${logback.loglevel}</level>
+        </filter>
+        <encoder>
+            <pattern>${FILE_LOG_PATTERN}</pattern>
+        </encoder>
+        <file>${LOG_FILE}.json</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+            <fileNamePattern>${LOG_FILE}.%i</fileNamePattern>
+        </rollingPolicy>
+        <triggeringPolicy
+                class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+            <MaxFileSize>1MB</MaxFileSize>
+        </triggeringPolicy>
+        <encoder class="net.logstash.logback.encoder.LogstashEncoder">
+            <includeCallerInfo>true</includeCallerInfo>
+            <customFields>{"appname":"${pom.artifactId}","version":"${pom.version}"}</customFields>
+        </encoder>
+    </appender>
+
+    <logger name="javax.activation" level="warn"/>
+    <logger name="se.inera.fmu" level="${logback.loglevel}"/>
+    <logger name="ch.qos.logback" level="WARN"/>
+    <logger name="com.codahale.metrics" level="WARN"/>
+    <logger name="com.ryantenney" level="WARN"/>
+    <logger name="com.zaxxer" level="WARN"/>
+    <logger name="net.sf.ehcache" level="WARN"/>
+    <logger name="org.apache" level="WARN"/>
+    <logger name="org.apache.catalina.startup.DigesterFactory" level="OFF"/>
+    <logger name="org.hibernate.validator" level="WARN"/>
+    <logger name="org.hibernate" level="WARN"/>
+    <logger name="org.hibernate.ejb.HibernatePersistence" level="OFF"/>
+    <logger name="org.atmosphere" level="WARN"/>
+    <logger name="org.springframework" level="WARN"/>
+    <logger name="org.springframework.web" level="WARN"/>
+    <logger name="org.springframework.security" level="WARN"/>
+    <logger name="org.springframework.cache" level="WARN"/>
+    <logger name="org.thymeleaf" level="WARN"/>
+    <logger name="com.mangofactory.swagger" level="warn"/>
+    <logger name="com.wordnik.swagger" level="warn"/>
+    <logger name="liquibase" level="warn"/>
+    <logger name="org.activiti" level="warn"/>
+    <logger name="sun.rmi.transport." level="info"/>
+    <logger name="org.opensaml.DefaultBootstrap" level="warn"/>
+    <logger name="org.opensaml.xml" level="warn"/>
+    <logger name="org.springframework.ws.client.MessageTracing" level="trace"/>
+    <logger name="org.springframework.ws.server.MessageTracing" level="trace"/>
+    <logger name="com.sun.xml.internal.bind.v2.runtime.reflect.opt.OptimizedAccessorFactory" level="info"/>
+    <logger name="javax.xml.bind" level="info"/>
+
+    <contextListener class="ch.qos.logback.classic.jul.LevelChangePropagator">
+        <resetJUL>true</resetJUL>
+    </contextListener>
+
+    <root level="${logback.loglevel}">
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="FILE" />
+        <appender-ref ref="JSON" />
+    </root>
+
+</configuration>

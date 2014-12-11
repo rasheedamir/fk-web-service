@@ -52,6 +52,7 @@
         <start-class>se.fk.fmu.Application</start-class>
         <lombok.version>1.14.4</lombok.version>
         <tomcat.version>8.0.3</tomcat.version>
+        <logback.loglevel>DEBUG</logback.loglevel>
     </properties>
 
     <build>
